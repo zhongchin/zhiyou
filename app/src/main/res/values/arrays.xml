@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="articleTypes">
+        <item name="all">所有</item>
+        <item name="follow">我关注的</item>
+    </string-array>
+</resources>
