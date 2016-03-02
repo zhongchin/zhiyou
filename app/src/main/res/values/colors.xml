@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="swipefreshcolor1">#303F9F</color>
+    <color name="swipefreshcolor2">#FF4081</color>
+    <color name="swipefreshcolor3">#ff00ddff</color>
+    <color name="swipefreshcolor4">#ff998877</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="checkBgColor">#45c01a</color>
+    <color name="nocheckBgColor">#999999</color>
+    <color name="titleColor">#ffffff</color>
+    <color name="homeArticleBg">#ffff0000</color>
+    <color name="homeAvatarBg">#fff8f8f8</color>
+    <color name="homeUsernameBg">#fff8f8f8</color>
+    <color name="homeArticleContentBg">#fff8f8f8</color>
+    <color name="homeContentArticleSubjectColor">#ff000000</color>
+    <color name="homeContentActionBtn">#ff000000</color>
+    <color name="homeArticleContextColor">#88000000</color>
+    <drawable name="roundCardBg">#fff8f8f8</drawable>
+</resources>
