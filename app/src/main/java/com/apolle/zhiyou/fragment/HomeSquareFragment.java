@@ -2,7 +2,6 @@ package com.apolle.zhiyou.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,7 @@ import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
 import com.apolle.zhiyou.activity.ArticleDetailActivity;
 import com.apolle.zhiyou.adapter.HomeContentAdapter;
-import com.apolle.zhiyou.mUtil.NetUrl;
+import com.apolle.zhiyou.interactor.NetUrl;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,7 +32,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class HomeSquareFragment extends BaseFragment {
@@ -139,7 +137,7 @@ public class HomeSquareFragment extends BaseFragment {
                        System.out.println("huangtao onitemclick"+position+"===="+v);
                        Intent intent=new Intent(getActivity(),ArticleDetailActivity.class);
                        Bundle bundle=new Bundle();
-                       bundle.putSerializable("article", (Article)articles.get(position));
+                       bundle.putSerializable("article", articles.get(position) );
                        intent.putExtras(bundle);
                       startActivity(intent);
             }

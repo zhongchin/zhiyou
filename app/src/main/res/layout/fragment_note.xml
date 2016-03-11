@@ -1,13 +1,37 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.apolle.zhiyou.fragment.NoteFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.apolle.zhiyou.fragment.NoteFragment"
+    android:focusable="false">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="笔记"
+        android:id="@+id/breadcrumb"
+        android:minHeight="50dp"
+        />
+    <android.support.v7.widget.ListViewCompat
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="笔记" />
-
-</FrameLayout>
+        android:id="@+id/notepad"
+        android:layout_below="@+id/breadcrumb"
+        >
+    </android.support.v7.widget.ListViewCompat>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_add_notepad_deep"
+        android:layout_marginRight="20dp"
+        android:elevation="2dp"
+        app:rippleColor="@color/colorPrimary"
+        app:elevation="2dp"
+        />
+</RelativeLayout>

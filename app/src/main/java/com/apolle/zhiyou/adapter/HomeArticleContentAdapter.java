@@ -91,7 +91,7 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
           Article article=articles.get(position);
           myViewHolder.avatar.setDefaultImageResId(android.R.drawable.ic_lock_idle_alarm);
           myViewHolder.avatar.setErrorImageResId(android.R.drawable.ic_lock_idle_alarm);
-          String imgSrc=(String) article.getHeadpic();
+          String imgSrc= article.getHeadpic();
           myViewHolder.avatar.setImageUrl(imgSrc,imageLoader);
 
           myViewHolder.userTextView.setText(article.getAuthor());

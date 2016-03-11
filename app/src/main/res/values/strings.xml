@@ -1,9 +1,10 @@
 <resources>
+    <string name="cancel">取消</string>
     <string name="logout">退出</string>
     <string name="app_name">智友</string>
     <string name="square">广场</string>
     <string name="bookstore">藏书阁</string>
-    <string name="bookmark">笔记</string>
+    <string name="note">笔记</string>
     <string name="news">会话</string>
     <string name="bookOnline">在线书城</string>
     <string name="bookoffline">本地书库</string>
@@ -11,11 +12,22 @@
     <string name="collectBtn">收藏</string>
     <string name="forwardBtn">转发</string>
     <string name="favouriteBtn">赞一个</string>
+    <string name="noSelectFile">没有选择文件和要扫描的目录</string>
+    <string name="ensureScanFileAndDirFile">确认添加文件和扫描的该目录下的文件</string>
+    <string name="book_prev">上一页</string>
+    <string name="book_next">下一页</string>
+    <string name="book_catalog">目录</string>
+    <string name="book_setting_day">白天</string>
+    <string name="book_setting_night">夜间</string>
+    <string name="book_theme_setting">主题</string>
+
+    <string name="bookmark">书签</string>
+    <string name="catalog">目录</string>
 
     <string name="collect">收藏到我的笔记</string>
     <string name="forwardtomynote">转发同时收藏到笔记</string>
     <string name="determine">确定</string>
-
+    <string name="nodeSelect">请选择要收藏到的笔记本</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_index">IndexActivity</string>
@@ -132,4 +144,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="title_activity_read_book">ReadBookActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_main10">Main10Activity</string>
+    <string name="title_activity_book_left_menu">BookLeftMenu</string>
 </resources>

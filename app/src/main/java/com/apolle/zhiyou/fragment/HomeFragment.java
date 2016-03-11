@@ -3,43 +3,27 @@ package com.apolle.zhiyou.fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.apolle.zhiyou.Http.ArticleAction;
 import com.apolle.zhiyou.Model.Channel;
 import com.apolle.zhiyou.R;
+import com.apolle.zhiyou.activity.MainActivity;
 import com.apolle.zhiyou.adapter.TabPageAdapter;
-import com.apolle.zhiyou.mUtil.NetUrl;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
+import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TabPageIndicator;
 
-import org.json.JSONObject;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HomeFragment extends BaseFragment {
 
@@ -53,20 +37,19 @@ public class HomeFragment extends BaseFragment {
     public DbUtils db;
     private ViewPager pager;
     private TabPageIndicator indicator;
+    private  Spinner spinner;
+    private String[] spinnerItems;
+    public HomeFragment() {
 
-
-
-
+    }
     public static HomeFragment getHomeFragment(){
         if(null==homeFragment){
-             homeFragment=new HomeFragment();
+             homeFragment = new HomeFragment();
         }
         return homeFragment;
     }
 
-    public HomeFragment() {
 
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -74,10 +57,43 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        System.out.println("onattach");
+        super.onAttach( context );
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         containerView= inflater.inflate(R.layout.fragment_home, container, false);
          indicator=(TabPageIndicator) containerView.findViewById(R.id.zy_home_title);
          pager= (ViewPager) containerView.findViewById(R.id.zy_home_container);
+          MainActivity.onBottomTabChangeListener onBottomTabChangeListener=new MainActivity.onBottomTabChangeListener(){
+              @Override
+              public void onBottomTabChange(Toolbar toolbar) {
+
+              }
+          };
+      /*  tabInteractor=new TabInteractor() {//当切换到此页面时更换toolbar中内容
+            @Override
+            public void OnTabChange(Context context, View toolbar_content) {
+                  spinner=new Spinner(context);
+                  spinnerItems=getResources().getStringArray(R.array.articleTypes);
+                ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,android.R.id.text1,spinnerItems);
+                 spinner.setAdapter(adapter);
+                ((LinearLayout)toolbar_content).addView(spinner);
+            }
+        };
+        if(null!=spinner){
+            spinner.setOnItemClickListener( new Spinner.OnItemClickListener() {
+                @Override
+                public boolean onItemClick(Spinner parent, View view, int position, long id) {
+                    if(null!=spinnerItems){
+
+                    }
+                    return false;
+                }
+            });
+        }*/
 
          db=DbUtils.create(getActivity(),"mchannel.db");
         //获取用户的home title;
@@ -137,48 +153,25 @@ public class HomeFragment extends BaseFragment {
 //         请求参数头
        final HashMap<String,String> params=new HashMap<String,String>();
        params.put("uid","2");//当前登录用户id
-
-       Context context=getActivity().getApplicationContext();
-        RequestQueue requestQueue= Volley.newRequestQueue(context);
-
-       StringRequest request=new StringRequest(Request.Method.POST, NetUrl.HOME_TITLE, new Response.Listener<String>() {
-           @Override
-           public void onResponse(String response) {
-               System.out.println("接收数据"+response);
-             if(null!=response){
+       System.out.println("title:"+titles);
+         ArticleAction.HomeTitle(getActivity(), params, new ArticleAction.renderCallback() {
+             @Override
+             public void SuccessRender(ArrayList<? extends Serializable> titles) {
+                 adapter=new TabPageAdapter(getFm(),(ArrayList<Channel>)titles);
+                 pager.setAdapter(adapter);
+                 indicator.setViewPager(pager);
                  try{
-                     JSONObject json=new JSONObject(response);
-                     String errorcode= json.getString("errorcode");
-                     if(0==Integer.parseInt(errorcode)){
-                         Gson gson= new Gson();
-                         String channel=json.getString("content");
-                          titles=gson.fromJson(channel, new TypeToken<List<Channel>>(){ }.getType());
-                            System.out.println("title:"+titles);
-                            adapter=new TabPageAdapter(getFm(),titles);
-                            pager.setAdapter(adapter);
-                            indicator.setViewPager(pager);
-                            db.saveAll(titles);//将数据存储到本地
-                     }
-                     System.out.println(TAG_ONE+"标题"+titles);
+                     db.saveAll(titles);//将数据存储到本地
                  }catch (Exception e){
                      e.printStackTrace();
                  }
-           }
+             }
 
-           }
-       }, new Response.ErrorListener() {
-           @Override
-           public void onErrorResponse(VolleyError error) {
-               Toast.makeText(getActivity(),error.getMessage(),Toast.LENGTH_LONG).show();
-           }
-       }){
-           @Override
-           protected Map<String, String> getParams() throws AuthFailureError {
-                    return params;
-           }
-       };
-       requestQueue.add(request);
+             @Override
+             public void FailRender() {
 
+             }
+         });
    }
 
 

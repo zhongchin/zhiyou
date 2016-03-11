@@ -1,10 +1,12 @@
 package com.apolle.zhiyou.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by huangtao on 2016/2/2619:48.
  * modify by huangtao on 19:48
  */
-public class Channel {
+public class Channel implements Serializable{
     public int _ID;
     public int cid;
     public String ctitle;

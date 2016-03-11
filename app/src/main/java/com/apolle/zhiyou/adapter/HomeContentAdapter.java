@@ -33,8 +33,8 @@ public class HomeContentAdapter extends RecyclerView.Adapter<HomeContentAdapter.
 
     private ArrayList<Article> articles;
     private Context mContext;
-    private LayoutInflater mInflater;
-    private View mView;
+    private View mView;    private LayoutInflater mInflater;
+
     private ImageLoader imageLoader;
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
@@ -77,7 +77,7 @@ public class HomeContentAdapter extends RecyclerView.Adapter<HomeContentAdapter.
 
         myViewHolder.avatar.setDefaultImageResId(android.R.drawable.ic_lock_idle_alarm);
         myViewHolder.avatar.setErrorImageResId(android.R.drawable.ic_lock_idle_alarm);
-        String imgSrc=(String) article.getHeadpic();
+        String imgSrc= article.getHeadpic();
         myViewHolder.avatar.setImageUrl(imgSrc,imageLoader);
 
         myViewHolder.userTextView.setText(article.getAuthor());

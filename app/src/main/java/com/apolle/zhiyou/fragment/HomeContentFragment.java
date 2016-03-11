@@ -1,20 +1,12 @@
 package com.apolle.zhiyou.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -26,17 +18,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
-import com.apolle.zhiyou.activity.ArticleDetailActivity;
 import com.apolle.zhiyou.adapter.HomeArticleContentAdapter;
-import com.apolle.zhiyou.adapter.HomeContentAdapter;
-import com.apolle.zhiyou.mUtil.NetUrl;
+import com.apolle.zhiyou.interactor.NetUrl;
 import com.google.gson.Gson;
-import com.google.gson.internal.Excluder;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lidroid.xutils.view.annotation.event.OnScroll;
-import com.rey.material.widget.LinearLayout;
 
 import org.json.JSONObject;
 

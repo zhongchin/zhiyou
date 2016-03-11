@@ -1,5 +1,6 @@
 package com.apolle.zhiyou.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -23,9 +24,9 @@ public class BookFragmentAdapter extends FragmentPagerAdapter {
         @Override
         public Fragment getItem(int position) {
             BookContentFragment contentFragment=new BookContentFragment();
-           /* Bundle bundle=new Bundle();
+            Bundle bundle=new Bundle();
             bundle.putInt(BookContentFragment.TAB_TAG,position);
-            contentFragment.setArguments(bundle);*/
+            contentFragment.setArguments(bundle);
             return contentFragment;
         }
 

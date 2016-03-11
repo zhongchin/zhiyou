@@ -3,7 +3,7 @@ package com.apolle.zhiyou.Http;
 import android.content.Context;
 
 import com.android.volley.VolleyError;
-import com.apolle.zhiyou.mUtil.NetUrl;
+import com.apolle.zhiyou.interactor.NetUrl;
 
 import java.util.HashMap;
 

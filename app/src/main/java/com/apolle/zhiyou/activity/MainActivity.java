@@ -3,22 +3,26 @@ package com.apolle.zhiyou.activity;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.apolle.zhiyou.R;
+import com.apolle.zhiyou.fragment.BaseFragment;
 import com.apolle.zhiyou.fragment.BookFragment;
 import com.apolle.zhiyou.fragment.ChatFragment;
-import com.apolle.zhiyou.fragment.HomeContentFragment;
+
 import com.apolle.zhiyou.fragment.HomeFragment;
 import com.apolle.zhiyou.fragment.NoteFragment;
 import com.lidroid.xutils.ViewUtils;
@@ -64,15 +68,24 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
     @ViewInject(R.id.toolbar)
      Toolbar toolbar;
 
-    private long firstTime=0;
+
     FragmentManager fg;
+    FragmentTransaction ft;
     private int choiceIndex=0;
     public  boolean ToolbarIsShow=false;
+    public Fragment [] fragments;
+    private HomeFragment homeFragment;
+    private BookFragment bookFragment;
+    private NoteFragment noteFragment;
+    private ChatFragment chatFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ViewUtils.inject(this);
-        System.out.println("huangtao"+savedInstanceState);
+        ViewUtils.inject( this );
+        fg=getSupportFragmentManager();
+
+        fragments=new Fragment[4];
         if(null==savedInstanceState) {
             ViewOnClick(zy_ll_square);
         }
@@ -81,6 +94,8 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
         toggle.syncState();
         NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+//        toolbar.getViewTreeObserver().addOnGlobalLayoutListener();
+
     }
 
 
@@ -90,28 +105,35 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
     }
     @OnClick({R.id.zy_ll_square,R.id.zy_ll_book,R.id.zy_ll_news,R.id.zy_ll_note})
     public void ViewOnClick(View view){
-        fg=getSupportFragmentManager();
+        ft= fg.beginTransaction();
+          Bundle arguments=new Bundle();
         switch (view.getId()){
 
                 case R.id.zy_ll_book:
                     if(1!=choiceIndex){
-                        tabBgChange(1);
-                        fg.beginTransaction().replace(R.id.zy_frame_container,new BookFragment(),"book").commit();
-                        choiceIndex=1;
+                            bookFragment=BookFragment.getBookFragment();
+                            fragments[1]=bookFragment;
+                            ft.replace( R.id.zy_home_container,bookFragment,"book").commit();
+                            tabBgChange(1);
+                            choiceIndex=1;
+                        }
 
-                    }
                     break;
                 case R.id.zy_ll_note:
                     if(2!=choiceIndex){
+                        noteFragment=NoteFragment.getNoteFragment();
+                        fragments[2]=noteFragment;
+                        ft.replace( R.id.zy_home_container,noteFragment,"note").commit();
                         tabBgChange(2);
-                        fg.beginTransaction().replace(R.id.zy_frame_container,new NoteFragment(),"note").commit();
                         choiceIndex=2;
                     }
                     break;
                 case R.id.zy_ll_news:
                     if(3!=choiceIndex){
+                        chatFragment=ChatFragment.getChatFragment();
+                        fragments[3]=chatFragment;
+                        ft.replace( R.id.zy_home_container,chatFragment,"chat").commit();
                         tabBgChange(3);
-                        fg.beginTransaction().replace(R.id.zy_frame_container,new ChatFragment(),"chat").commit();
                         choiceIndex=3;
                     }
 
@@ -119,12 +141,26 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
                 case R.id.zy_ll_square:
                 default:
                     if(0!=choiceIndex){
+                        homeFragment=HomeFragment.getHomeFragment();
+                        fragments[0]=homeFragment;
+                        ft.replace( R.id.zy_home_container,homeFragment,"home").commit();
                         tabBgChange(0);
-                        fg.beginTransaction().replace(R.id.zy_frame_container, new HomeContentFragment(),"home").commit();
                         choiceIndex=0;
                     }
                     break;
+
         }
+
+    }
+    private void  hideFragment(int index){
+          if(null!=fragments&&fragments.length>0){
+              for (int i=0;i<fragments.length;i++) {
+                  if(i!=index){
+                      ft.hide(fragments[i]);
+                  }
+              }
+//              ft.commit();
+          }
     }
 
     private void tabBgChange(int index){
@@ -160,18 +196,7 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
             zy_text_news.setTextColor(getResources().getColor(R.color.nocheckBgColor));
     }
 
-    @Override
-    public void onBackPressed() {
-        long secondTime= System.currentTimeMillis();
-        //如果两次按键时间大于1000毫秒，则不退出
-        if(secondTime-firstTime>1000){
-            Toast.makeText(MainActivity.this,"再按一次退出应用",Toast.LENGTH_SHORT).show();
-            firstTime=secondTime;
-        }else{
-            finish();
-        }
-    }
-    
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         return false;
@@ -183,6 +208,12 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
         appbar.animate().translationY(0).setInterpolator(new AccelerateDecelerateInterpolator());
         ToolbarIsShow=true;
     }
+
+    @Override
+    public AppCompatActivity getActivity() {
+        return MainActivity.this;
+    }
+
     /**
      * 处理向下拉操作
      */
@@ -190,4 +221,8 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
         appbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateDecelerateInterpolator());
         ToolbarIsShow=false;
     }
+    public interface onBottomTabChangeListener{
+           void onBottomTabChange(Toolbar toolbar);
+    }
+
 }

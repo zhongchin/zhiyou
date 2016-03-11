@@ -31,7 +31,7 @@ public class VolleyStringRequest {
 
     public VolleyStringRequest(Context context){
           this.context=context;
-          this.mQueue= Volley.newRequestQueue(context);
+          mQueue= Volley.newRequestQueue(context);
     }
 
     public static  void RequestData(String url, final HashMap<String,String> newParams, final ResponseCallback responseCallback){

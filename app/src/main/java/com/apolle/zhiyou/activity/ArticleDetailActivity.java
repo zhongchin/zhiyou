@@ -3,6 +3,7 @@ package com.apolle.zhiyou.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.BaseAdapter;
@@ -22,7 +23,7 @@ import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
 import com.apolle.zhiyou.Tool.LruImageCache;
 import com.apolle.zhiyou.adapter.HomeArticleGridViewAdapter;
-import com.apolle.zhiyou.mUtil.NetUrl;
+import com.apolle.zhiyou.interactor.NetUrl;
 import com.google.gson.Gson;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.rey.material.widget.TextView;
@@ -61,7 +62,10 @@ public class ArticleDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
          Bundle bundle=getIntent().getExtras();
         article= (Article) bundle.getSerializable("article");
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         mQueue=Volley.newRequestQueue(this);
         LruImageCache imageCache=LruImageCache.getInstance();
          imageLoader=new ImageLoader(mQueue,imageCache);
@@ -161,5 +165,10 @@ public class ArticleDetailActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public AppCompatActivity getActivity() {
+        return ArticleDetailActivity.this;
     }
 }

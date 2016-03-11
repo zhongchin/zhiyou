@@ -13,9 +13,15 @@ import com.apolle.zhiyou.R;
  */
 public class ChatFragment extends BaseFragment {
 
-
+    private static ChatFragment chatFragment;
     public ChatFragment() {
         // Required empty public constructor
+    }
+    public static ChatFragment getChatFragment(){
+        if(null==chatFragment){
+            chatFragment=new ChatFragment();
+        }
+        return chatFragment;
     }
 
 
