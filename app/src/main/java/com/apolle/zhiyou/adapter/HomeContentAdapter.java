@@ -33,8 +33,8 @@ public class HomeContentAdapter extends RecyclerView.Adapter<HomeContentAdapter.
 
     private ArrayList<Article> articles;
     private Context mContext;
-    private LayoutInflater mInflater;
-    private View mView;
+    private View mView;    private LayoutInflater mInflater;
+
     private ImageLoader imageLoader;
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
@@ -77,7 +77,7 @@ public class HomeContentAdapter extends RecyclerView.Adapter<HomeContentAdapter.
 
         myViewHolder.avatar.setDefaultImageResId(android.R.drawable.ic_lock_idle_alarm);
         myViewHolder.avatar.setErrorImageResId(android.R.drawable.ic_lock_idle_alarm);
-        String imgSrc=(String) article.getHeadpic();
+        String imgSrc= article.getHeadpic();
         myViewHolder.avatar.setImageUrl(imgSrc,imageLoader);
 
         myViewHolder.userTextView.setText(article.getAuthor());
@@ -85,13 +85,6 @@ public class HomeContentAdapter extends RecyclerView.Adapter<HomeContentAdapter.
         myViewHolder.ArticleContentView.setText("   "+article.getContent());
         myViewHolder.subjectTextView.setText(article.getSubject());
 
-        ArrayList<Article.AttachmentsEntity> attachments=(ArrayList) article.getAttachments();
-
-        if (attachments.size()>=1){
-            myViewHolder.gridView.setAdapter(new HomeArticleGridViewAdapter(mContext,attachments));
-        }else{
-            myViewHolder.gridView.setVisibility(View.GONE);
-        }
 
         myViewHolder.FavouriteBtn.setText(mContext.getResources().getString(R.string.favouriteBtn));
         myViewHolder.CollectBtn.setText(mContext.getResources().getString(R.string.collectBtn));
@@ -172,7 +165,6 @@ public class HomeContentAdapter extends RecyclerView.Adapter<HomeContentAdapter.
             subjectTextView=(TextView)convertView.findViewById(R.id.content_article_subject);
             ArticleContentView=(TextView) convertView.findViewById(R.id.home_content_item_view);
 
-            gridView=(GridView) convertView.findViewById(R.id.home_content_attachment);
             FavouriteBtn=(Button) convertView.findViewById(R.id.home_content_favourite);
             ForwardBtn=(Button)convertView.findViewById(R.id.home_content_forward);
             CollectBtn=(Button)convertView.findViewById(R.id.home_content_collect);

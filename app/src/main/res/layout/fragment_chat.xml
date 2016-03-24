@@ -1,13 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.apolle.zhiyou.fragment.ChatFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.apolle.zhiyou.fragment.ChatFragment"
+    >
+    <com.rey.material.widget.TabPageIndicator
+        android:id="@+id/chat_tab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="会话" />
-
-</FrameLayout>
+        android:layout_height="@dimen/titleBarMinHeight"
+        app:tpi_indicatorHeight="2dp"
+        app:theme="@style/Material.Widget.TabPageIndicator.Fixed.Light"
+        app:tpi_tabSingleLine="true"
+        app:tpi_indicatorAtTop="false"
+        android:textSize="16sp"
+        android:fillViewport="true"
+        app:tpi_mode="fixed"
+        app:tpi_centerCurrentTab="true"
+        android:minHeight="@dimen/titleBarMinHeight"
+        android:scrollIndicators="bottom"
+        />
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:background="@drawable/horizontal_line"
+           android:id="@+id/hl_div_chat"
+           android:layout_below="@+id/chat_tab"
+           />
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chatPager"
+            android:layout_below="@+id/hl_div_chat"
+            />
+</RelativeLayout>

@@ -27,15 +27,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
+                android:layout_gravity="center"
+                android:gravity="center"
+                app:layout_scrollFlags="enterAlwaysCollapsed"
                 >
-                <Spinner
-                    android:id="@+id/articleType"
+                <com.rey.material.widget.TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/articleTypes"
+                    android:gravity="center"
                     android:layout_gravity="center"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/header_title"
+                    />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
@@ -48,7 +52,7 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/zy_frame_container"
+                            android:id="@+id/zy_home_container"
 
                             >
                       </FrameLayout>
@@ -56,9 +60,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="2dp"
+                            android:paddingBottom="2dp"
                             android:background="#fcfcfc"
+                            android:orientation="vertical"
                             >
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#CDCDCD"
+                                android:layout_marginBottom="5dp"
+                                />
                           <include layout="@layout/layout_bottom"></include>
                        </LinearLayout>
                     </RelativeLayout>
@@ -72,7 +83,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+        android:visibility="gone"
+        />
 </android.support.v4.widget.DrawerLayout>
 
 

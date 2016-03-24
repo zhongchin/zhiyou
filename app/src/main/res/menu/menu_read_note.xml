@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+     >
+    <item
+        android:id="@+id/edit_folder"
+        android:icon="@drawable/ic_folder_open"
+        android:showAsAction="always"
+        android:title="选择所属目录"
+        />
+</menu>

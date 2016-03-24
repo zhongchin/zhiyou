@@ -9,35 +9,6 @@ import java.util.List;
  */
 public class Article implements Serializable {
 
-    /**
-     * tid : 1
-     * cid : 2
-     * created_at : 1456568708
-     * dateline : 1456568711
-     * authid : 2
-     * author : 第一种
-     header('Content-type: application/json');
-     另一种
-     header('Content-type: 普罗米修斯会思考
-     * subject : 第一种
-     header('Content-type: application/json');
-     另一种
-     header('Content-type: text/json');
-     * content : 第一种
-     header('Content-type: application/json');
-     另一种
-     header('Content-type: text/json');
-     * recommends : 5
-     * closed : 0
-     * report : 0
-     * favtimes : 1
-     * forwardtimes : 3
-     * commentimes : 2
-     * uid : 2
-     * nickname : 普罗米修斯会思考
-     * headpic : null
-     * attachments : [{"ta_id":"1","tid":"1","picpath":"http://b.hiphotos.baidu.com/image/h%3D200/sign=9d3833093f292df588c3ab158c305ce2/d788d43f8794a4c274c8110d0bf41bd5ad6e3928.jpg"},{"ta_id":"2","tid":"1","picpath":"http://www.people.com.cn/mediafile/pic/20150331/77/8172027402265324077.jpg"}]
-     */
 
     private String tid;
     private String cid;
@@ -56,13 +27,7 @@ public class Article implements Serializable {
     private String uid;
     private String nickname;
     private String headpic;
-    /**
-     * ta_id : 1
-     * tid : 1
-     * picpath : http://b.hiphotos.baidu.com/image/h%3D200/sign=9d3833093f292df588c3ab158c305ce2/d788d43f8794a4c274c8110d0bf41bd5ad6e3928.jpg
-     */
 
-    private List<AttachmentsEntity> attachments;
 
     public void setTid(String tid) {
         this.tid = tid;
@@ -130,10 +95,6 @@ public class Article implements Serializable {
 
     public void setHeadpic(String headpic) {
         this.headpic = headpic;
-    }
-
-    public void setAttachments(List<AttachmentsEntity> attachments) {
-        this.attachments = attachments;
     }
 
     public String getTid() {
@@ -204,37 +165,6 @@ public class Article implements Serializable {
         return headpic;
     }
 
-    public List<AttachmentsEntity> getAttachments() {
-        return attachments;
-    }
 
-    public static class AttachmentsEntity {
-        private String ta_id;
-        private String tid;
-        private String picpath;
 
-        public void setTa_id(String ta_id) {
-            this.ta_id = ta_id;
-        }
-
-        public void setTid(String tid) {
-            this.tid = tid;
-        }
-
-        public void setPicpath(String picpath) {
-            this.picpath = picpath;
-        }
-
-        public String getTa_id() {
-            return ta_id;
-        }
-
-        public String getTid() {
-            return tid;
-        }
-
-        public String getPicpath() {
-            return picpath;
-        }
-    }
 }
