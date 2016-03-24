@@ -33,7 +33,7 @@ public class BookThemeSet extends Fragment implements SeekBar.OnSeekBarChangeLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.activity_book_theme,null);
         ReadBookActivity activity=(ReadBookActivity)getActivity();
-        ReadBookView book_content= (ReadBookView) activity.findViewById(R.id.book_content);
+        WebView book_content= (WebView) activity.findViewById(R.id.book_content);
         curFontSize=book_content.getSettings().getDefaultFontSize();
         fontText= (TextView) rootView.findViewById(R.id.tv);
         fontText.setText(String.valueOf(curFontSize));

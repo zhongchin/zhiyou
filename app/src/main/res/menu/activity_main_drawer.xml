@@ -2,28 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/square_setting"
+            android:icon="@drawable/square_settings"
+            android:title="@string/square_setting" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/book_setting"
+            android:icon="@drawable/book_setting"
+            android:title="@string/book_setting" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/note_setting"
+            android:icon="@drawable/settings_note"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/chat_setting"
+            android:icon="@drawable/chat_settings"
+            android:title="@string/chat_setting" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
+        <group>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_logout_deep"
                 android:title="@string/logout" />
-        </menu>
-    </item>
+        </group>
 
 </menu>

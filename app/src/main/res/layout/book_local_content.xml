@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         android:id="@+id/local_bookself"
         android:numColumns="3"
+        android:gravity="bottom"
         />
 
 </LinearLayout>

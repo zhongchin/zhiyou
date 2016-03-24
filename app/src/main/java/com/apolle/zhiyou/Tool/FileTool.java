@@ -1,5 +1,7 @@
 package com.apolle.zhiyou.Tool;
 
+import android.support.annotation.NonNull;
+
 import com.apolle.zhiyou.R;
 
 import java.io.BufferedOutputStream;
@@ -71,7 +73,7 @@ public class FileTool {
             zipFile = new ZipFile(file,ZipFile.OPEN_READ);
             Enumeration zipFileEntries =zipFile.entries();
             String zipFileName=file.getName();
-            String dirName=zipFileName.substring(0,zipFileName.indexOf("."));
+            String dirName=zipFileName.substring(0,zipFileName.lastIndexOf("."));
             dirName=dirName!=""?dirName:zipFileName;
             while(zipFileEntries.hasMoreElements()){
                 ZipEntry zipElement=(ZipEntry)zipFileEntries.nextElement();
@@ -86,6 +88,13 @@ public class FileTool {
         }
 
     }
+
+    /**
+     * 解压文件
+     * @param zipEntry
+     * @param inputStream
+     * @param savePath
+     */
     public static void unzipFile(ZipEntry zipEntry, InputStream inputStream,String savePath){
         String fileName=zipEntry.getName();
         String saveFileName=savePath+fileName;
@@ -103,8 +112,17 @@ public class FileTool {
             e.printStackTrace();
         }
     }
+    @NonNull
     public static String getFileType(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+    public static String getFileName(String fileName){//获取文件真实名称
+        if(fileName.indexOf("/")<=0){
+            return fileName.substring(0,fileName.lastIndexOf("."));
+        }else{
+            return fileName.substring(fileName.lastIndexOf("/"),fileName.lastIndexOf("."));
+        }
+
     }
     public static int getFileImage(String fileName){
           int image=0;

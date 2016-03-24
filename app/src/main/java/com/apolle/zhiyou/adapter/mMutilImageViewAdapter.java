@@ -5,8 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.apolle.zhiyou.view.adapter.MultiImageViewAdapter;
-
 import java.util.ArrayList;
 
 

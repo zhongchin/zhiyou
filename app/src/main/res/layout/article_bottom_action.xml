@@ -13,6 +13,7 @@
             android:background="#fff"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
+
             android:gravity="center_vertical|center_horizontal"
         >
             <com.rey.material.widget.Button
@@ -36,11 +37,11 @@
                 android:gravity="center"
                 android:textColor="@color/homeContentActionBtn"
                 android:textSize="@dimen/homeContentActionBtn"
+                android:drawableRight="@drawable/vertical_line"
                 android:drawableBottom="#CDCDCD"
                 >
             </com.rey.material.widget.Button>
-
-            <com.rey.material.widget.Button
+              <com.rey.material.widget.Button
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"

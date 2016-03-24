@@ -8,7 +8,7 @@
         style="@style/Material.Widget.TabPageIndicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleBarMinHeight"
-        app:tpi_indicatorHeight="5dp"
+        app:tpi_indicatorHeight="2dp"
         app:theme="@style/Material.Widget.TabPageIndicator.Fixed.Light"
         android:id="@+id/zy_home_title"
         app:tpi_tabSingleLine="true"
@@ -17,13 +17,23 @@
         android:textSize="16sp"
         android:fillViewport="true"
         android:minHeight="@dimen/titleBarMinHeight"
+        app:tpi_mode="fixed"
+        app:tpi_centerCurrentTab="true"
         android:scrollIndicators="bottom">
 
     </com.rey.material.widget.TabPageIndicator>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/horizontal_line"
+        android:id="@+id/hl_div"
+        android:layout_below="@+id/zy_home_title"
+        />
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/zy_home_container"
+        android:layout_below="@+id/hl_div"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
     </android.support.v4.view.ViewPager>

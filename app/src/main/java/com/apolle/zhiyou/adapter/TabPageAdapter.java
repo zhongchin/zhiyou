@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.apolle.zhiyou.Model.Channel;
 import com.apolle.zhiyou.fragment.HomeContentFragment;
-import com.apolle.zhiyou.fragment.HomeSquareFragment;
 
 import java.util.ArrayList;
 

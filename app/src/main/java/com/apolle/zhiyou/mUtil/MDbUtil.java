@@ -21,11 +21,11 @@ import java.util.List;
 public class MDbUtil {
     private  DbUtils dbUtils;
     private static MDbUtil mDbUtil;
-    public MDbUtil(Context context){
+    private MDbUtil(Context context){
         DbUtils.DaoConfig config=new DbUtils.DaoConfig( context );
         config.setDbName("zhiyou");
         config.setDbVersion( 1 );
-         dbUtils = DbUtils.create( config );
+        dbUtils = DbUtils.create( config );
     }
 
     public static MDbUtil newInstance(Context context) {
@@ -33,6 +33,9 @@ public class MDbUtil {
             mDbUtil=new MDbUtil(context);
         }
         return mDbUtil;
+    }
+    public DbUtils getDbUtils(){
+        return dbUtils;
     }
     public void save(Object entity){
         try{
@@ -83,8 +86,10 @@ public class MDbUtil {
      */
     public void saveNoInsert(List<? extends Object> entitys,String column){
         try{
-             Class<?> tableName=entitys.get(0).getClass();
-            dbUtils.createTableIfNotExist(tableName);
+            Class<?> tableName=entitys.get(0).getClass();
+            if(!dbUtils.tableIsExist(tableName)){
+                dbUtils.createTableIfNotExist(tableName);
+            }
             for (Object obj:entitys){
                 if(!hasEntity(obj,column)){
                     dbUtils.save(obj);

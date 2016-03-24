@@ -47,21 +47,19 @@ public class BookContentFragment extends BaseFragment {
         if(curSelectType==0){//本地书库
             rootView=inflater.inflate(R.layout.book_local_content, container, false);
             LocalBookShelf=(BookGirdView) rootView.findViewById(R.id.local_bookself);
-              int height= DisplayMerticsTool.getWindowHeight(getContext());
+
                 books= LocalBookAction.getBookList(getContext());
                 bookAdapter=new LocalBookAdapter(getContext(),books);
                 LocalBookShelf.setAdapter( bookAdapter);
-
 
               LocalBookShelf.setOnItemClickListener( new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     if(books.get( position).getType()=="add"){
-                        Intent intent= new Intent(getContext(), ScanBookActivity.class);
-                        getContext().startActivity(intent);
+                     goActivity(ScanBookActivity.class);
                     }else{
-                        goToReadBookActivity( books.get( position ).getPath());
+                        goToReadBookActivity( books.get( position ));
                     }
                 }
             });
@@ -82,12 +80,19 @@ public class BookContentFragment extends BaseFragment {
         }
         super.onActivityCreated(savedInstanceState);
     }
-    private void goToReadBookActivity(String path){
-        Intent intent=new Intent( getContext(),ReadBookActivity.class );
-        intent.addCategory( "android.intent.action.view" );
-        intent.setDataAndType( Uri.fromFile(new File( path ) ),"epub");
-        startActivity(intent);
 
+    /**
+     * 点击看书时,进入看书界面
+     * @param book
+     */
+    private void goToReadBookActivity(LocalBook book){
+        Intent intent=new Intent( getContext(),ReadBookActivity.class );
+         String type=book.getType();
+         String path=book.getPath();
+        intent.addCategory( "android.intent.action.view" );
+        intent.setDataAndType( Uri.fromFile(new File( path ) ),type);
+        startActivity(intent);
+        getActivity().finish();
     }
 
 
