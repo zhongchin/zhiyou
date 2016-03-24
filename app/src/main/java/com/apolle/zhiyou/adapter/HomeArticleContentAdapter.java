@@ -9,25 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.apolle.zhiyou.Http.ArticleAction;
+import com.apolle.zhiyou.Http.NoteAction;
 import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
 import com.apolle.zhiyou.Tool.LruImageCache;
 import com.apolle.zhiyou.activity.ArticleDetailActivity;
-import com.apolle.zhiyou.activity.CollectActivity;
+import com.apolle.zhiyou.activity.SelectNodeActivity;
+import com.apolle.zhiyou.interactor.NetUrl;
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
 import com.rey.material.widget.RadioButton;
 import com.rey.material.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Created by huangtao on 2016/2/2712:47.
@@ -70,14 +74,12 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
          if(null==convertView){
              LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
              convertView=inflater.inflate(R.layout.home_content_item,null);
-             myViewHolder.avatar=(NetworkImageView) convertView.findViewById(R.id.home_content_item_headpic);
+             myViewHolder.avatar=(BootstrapCircleThumbnail) convertView.findViewById(R.id.home_content_item_headpic);
              myViewHolder.userTextView=(TextView)convertView.findViewById(R.id.home_content_item_username);
              myViewHolder.otherTopicTextView=(TextView)convertView.findViewById(R.id.home_content_item_other);
              myViewHolder.contentTextView=(TextView) convertView.findViewById(R.id.home_content_item_view);
              myViewHolder.subjectTextView=(TextView)convertView.findViewById(R.id.content_article_subject);
              myViewHolder.ArticleContentView=(TextView) convertView.findViewById(R.id.home_content_item_view);
-
-             myViewHolder.gridView=(GridView) convertView.findViewById(R.id.home_content_attachment);
              myViewHolder.FavouriteBtn=(Button) convertView.findViewById(R.id.home_content_favourite);
              myViewHolder.ForwardBtn=(Button)convertView.findViewById(R.id.home_content_forward);
              myViewHolder.CollectBtn=(Button)convertView.findViewById(R.id.home_content_collect);
@@ -89,28 +91,32 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
              myViewHolder=(HomeViewHolder) convertView.getTag();
          }
           Article article=articles.get(position);
-          myViewHolder.avatar.setDefaultImageResId(android.R.drawable.ic_lock_idle_alarm);
-          myViewHolder.avatar.setErrorImageResId(android.R.drawable.ic_lock_idle_alarm);
           String imgSrc= article.getHeadpic();
-          myViewHolder.avatar.setImageUrl(imgSrc,imageLoader);
+           ImageLoader.ImageListener listener=imageLoader.getImageListener(myViewHolder.avatar,R.drawable.user_headpic,R.drawable.user_error);
+            if(imgSrc==null||imgSrc.length()<1){
+                myViewHolder.avatar.setImageResource(R.drawable.user_headpic);
+            }else{
+                imageLoader.get(imgSrc,listener,64,64);
+            }
+
 
           myViewHolder.userTextView.setText(article.getAuthor());
-          myViewHolder.otherTopicTextView.setText(article.getDateline());
+          String dateline=article.getDateline();
+          SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy年MM月dd HH:mm:ss");
+          String time=dateFormat.format(new Date(Integer.parseInt(dateline)*1000));
+          myViewHolder.otherTopicTextView.setText(time);
           myViewHolder.ArticleContentView.setText(article.getContent());
           myViewHolder.subjectTextView.setText(article.getSubject());
 
+            String favouriteStr=mContext.getResources().getString(R.string.favouriteBtn);
+            String collectStr=mContext.getResources().getString(R.string.collectBtn);
+            String forwardStr=mContext.getResources().getString(R.string.forwardBtn);
+              String favCount=article.getFavtimes().equals("0")?"":article.getFavtimes();
+             String forwardCount=article.getForwardtimes().equals("0")?"":article.getForwardtimes();
 
-          ArrayList<Article.AttachmentsEntity> attachments=(ArrayList<Article.AttachmentsEntity>) article.getAttachments();
-
-          if (attachments.size()>=1){
-              myViewHolder.gridView.setAdapter(new HomeArticleGridViewAdapter(mContext,attachments));
-          }else{
-              myViewHolder.gridView.setVisibility(View.GONE);
-          }
-
-            myViewHolder.FavouriteBtn.setText(mContext.getResources().getString(R.string.favouriteBtn));
-            myViewHolder.CollectBtn.setText(mContext.getResources().getString(R.string.collectBtn));
-            myViewHolder.ForwardBtn.setText(mContext.getResources().getString(R.string.forwardBtn));
+            myViewHolder.FavouriteBtn.setText(favCount+" "+favouriteStr);
+            myViewHolder.CollectBtn.setText(collectStr);
+            myViewHolder.ForwardBtn.setText(forwardCount+" "+forwardStr);
 
             HashMap<String,Object> obj=new HashMap<String,Object>();
                  obj.put("position",position);
@@ -123,9 +129,6 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
             myViewHolder.ForwardBtn.setTag(obj);
             myViewHolder.saveBtn.setTag(obj);
             myViewHolder.checksaveNote.setTag(obj);
-
-
-
 
             myViewHolder.subjectTextView.setOnClickListener(this);
             myViewHolder.contentTextView.setOnClickListener(this);
@@ -151,10 +154,9 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
 
 
     public class HomeViewHolder{
-        public NetworkImageView avatar;
+        public BootstrapCircleThumbnail avatar;
         public TextView  userTextView,otherTopicTextView,subjectTextView,ArticleContentView;
         TextView contentTextView;
-        GridView gridView;
         Button FavouriteBtn,ForwardBtn,CollectBtn,saveBtn;
         LinearLayout savemynote;
         RadioButton checksaveNote;
@@ -169,24 +171,27 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
                 int  position=(int)map.get("position");
                 Article article=(Article)getItem(position);
 
-                HashMap<String,String> params=new HashMap<String,String>();
+                HashMap<String,String> params= NetUrl.initParams();
                 params.put("tid",article.getTid());
             switch (v.getId()){
-               case R.id.home_content_favourite:
+               case R.id.home_content_favourite://点击了赞一个
                           if(myViewHolder.savemynote.getVisibility()==View.VISIBLE){
                               myViewHolder.savemynote.setVisibility(View.GONE);
                           }
 
                          ArticleAction.Favourite(mContext,params);
+                        int  favtime=Integer.parseInt(article.getFavtimes())+1;
+                        myViewHolder.FavouriteBtn.setText(favtime+" 赞一个");
                     break;
-               case R.id.home_content_collect:
-                       Intent intent1=new Intent(mContext,CollectActivity.class);
+               case R.id.home_content_collect://点击收藏
+                       Intent intent1=new Intent(mContext,SelectNodeActivity.class);
                        Bundle bundle=new Bundle();
                        bundle.putSerializable("article", article);
+                       bundle.putInt("operator",1);
                        intent1.putExtras(bundle);
                        mContext.startActivity(intent1);
                     break;
-                case R.id.home_content_forward:
+                case R.id.home_content_forward://点击转发显示是否收藏到我的笔记
                     if("forward".equals(flag)){
                         myViewHolder.savemynote.setVisibility(View.GONE);
                         flag="";
@@ -196,20 +201,25 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
                         flag="forward";
                     }
                      break;
-                case R.id.save://保存数据到服务器
+                case R.id.save://转发同时保存数据到我的笔记
                     myViewHolder.savemynote.setVisibility(View.GONE);
                     if(flag=="forward"&&myViewHolder.checksaveNote.isSelected()){
-                        Intent intent=new Intent(mContext,CollectActivity.class);
+                        Intent intent=new Intent(mContext,SelectNodeActivity.class);
                         Bundle bundle2=new Bundle();
                         bundle2.putSerializable("article", article);
+                        bundle2.putInt("operator",4);
                         intent.putExtras(bundle2);
                         mContext.startActivity(intent);
                     }else{
-                        ArticleAction.Forward(mContext,params);
+                        NoteAction.Forward(mContext,params);//直接转发笔记
                     }
                     break;
-                case R.id.checksaveNote:
-                      myViewHolder.checksaveNote.setSelected(!myViewHolder.checksaveNote.isSelected());
+                case R.id.checksaveNote://点击选择是否转发到我的笔记
+                      if(myViewHolder.checksaveNote.isSelected()){
+                          myViewHolder.checksaveNote.setSelected(false);
+                      }else{
+                          myViewHolder.checksaveNote.setSelected(true);
+                      }
                       break;
                 case R.id.content_article_subject:
                 case R.id.home_content_item_view:
@@ -220,5 +230,9 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
                         mContext.startActivity(intent);
                     break;
             }
+    }
+
+    private void toast(String topic){
+        Toast.makeText(mContext,topic,Toast.LENGTH_SHORT).show();
     }
 }

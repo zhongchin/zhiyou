@@ -11,7 +11,7 @@
     <color name="nocheckBgColor">#999999</color>
     <color name="titleColor">#ffffff</color>
     <color name="homeArticleBg">#ffff0000</color>
-    <color name="homeAvatarBg">#fff8f8f8</color>
+    <color name="homeAvatarBg">#d1f4c5</color>
     <color name="homeUsernameBg">#fff8f8f8</color>
     <color name="homeArticleContentBg">#fff8f8f8</color>
     <color name="homeContentArticleSubjectColor">#ff000000</color>

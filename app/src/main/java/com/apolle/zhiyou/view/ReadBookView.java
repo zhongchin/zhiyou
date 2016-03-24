@@ -39,15 +39,6 @@ public class ReadBookView extends WebView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-      /*  Paint paint=new Paint();
-        paint.setColor(Color.BLUE);
-        canvas.drawRect(new Rect(0,0,getWidth(),getHeight()/5),paint);
-        canvas.drawRect(new Rect(0,0,getWidth()/3,getHeight()),paint);
-        canvas.save();
-        paint.setColor(Color.RED);
-        canvas.drawRect(new Rect(0,(4*getHeight()/5),getWidth(),getHeight()),paint);
-        canvas.drawRect(new Rect(2*getWidth()/3,0,getWidth(),getHeight()),paint);
-        canvas.save();*/
     }
 
     @Override

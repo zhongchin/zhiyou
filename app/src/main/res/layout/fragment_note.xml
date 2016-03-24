@@ -3,35 +3,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.apolle.zhiyou.fragment.NoteFragment"
+    android:id="@+id/zy_note_rl"
+    android:background="#FFFFFFFF"
     android:focusable="false">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+   <android.support.v7.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="40dp"
+       android:id="@+id/breadcrumb"
+       android:background="#FFE0E0E0"
+       android:elevation="2dp"
+       android:paddingLeft="20dp"
+       >
+   </android.support.v7.widget.RecyclerView>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="笔记"
-        android:id="@+id/breadcrumb"
-        android:minHeight="50dp"
+        android:layout_height="1dp"
+        android:background="#cdcdcd"
+        android:id="@+id/zy_div_1"
+        android:layout_below="@+id/breadcrumb"
         />
-    <android.support.v7.widget.ListViewCompat
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cdcdcd"
+        android:id="@+id/zy_div_2"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/breadcrumb"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/zy_div_2"
+        android:background="#FFE0E0E0"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+    >
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/notepad"
-        android:layout_below="@+id/breadcrumb"
-        >
-    </android.support.v7.widget.ListViewCompat>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_add_notepad_deep"
-        android:layout_marginRight="20dp"
-        android:elevation="2dp"
-        app:rippleColor="@color/colorPrimary"
-        app:elevation="2dp"
+
         />
+    </ScrollView>
+        <com.rey.material.widget.FloatingActionButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="60dp"
+            android:layout_marginRight="20dp"
+            android:background="#330092FF"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:layout_anchor="@+id/addBtn"
+            android:visibility="gone"
+            android:id="@+id/addNote"
+            app:fab_backgroundColor="#ffffff"
+            style="@style/Material.Widget.FloatingActionButton.Mini.Light"
+            app:fab_iconSrc="@drawable/ic_notepad_deep"
+            />
+        <com.rey.material.widget.FloatingActionButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#330092FF"
+            android:layout_marginBottom="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            app:elevation="2dp"
+            android:id="@+id/addNotePad"
+            app:fab_backgroundColor="#ffffff"
+            app:layout_anchor="@+id/zy_note_rl"
+            style="@style/Material.Widget.FloatingActionButton.Mini.Light"
+            app:fab_iconSrc="@drawable/ic_note_deep"
+            />
+
+        <com.rey.material.widget.FloatingActionButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#330092FF"
+            android:layout_gravity="bottom|right"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_add_notepad_deep"
+            android:layout_marginBottom="60dp"
+            android:layout_marginRight="20dp"
+            android:elevation="2dp"
+            app:rippleColor="@color/colorPrimary"
+            app:layout_anchor="@+id/zy_note_rl"
+            app:elevation="2dp"
+            app:fab_backgroundColor="#ffffff"
+            android:id="@+id/addBtn"
+            style="@style/Material.Widget.FloatingActionButton.Mini.Light"
+            app:fab_iconSrc="@drawable/ic_add_notepad_deep"
+            />
 </RelativeLayout>

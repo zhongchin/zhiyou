@@ -71,7 +71,6 @@ public class LocalBookAdapter extends BaseAdapter{
              int height=DisplayMerticsTool.getWindowHeight(context);
              int width=DisplayMerticsTool.getWindowWidth(context);
 
-//              convertView.getRootView().setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT,(height-80)/3,Gravity.CENTER_VERTICAL));
               convertView.setLayoutParams(new AbsListView.LayoutParams(width/3,(height-200)/3,Gravity.CENTER_VERTICAL));
             if(book.type=="add"){
                 Bitmap cover= BitmapFactory.decodeResource(context.getResources(),R.mipmap.cover_net);

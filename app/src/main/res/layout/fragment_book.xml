@@ -9,7 +9,7 @@
         style="@style/Material.Widget.TabPageIndicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleBarMinHeight"
-        app:tpi_indicatorHeight="5dp"
+        app:tpi_indicatorHeight="2dp"
         android:id="@+id/zy_book_actionbar"
         app:tpi_tabSingleLine="true"
         app:tpi_indicatorAtTop="false"
@@ -22,11 +22,18 @@
         android:alwaysDrawnWithCache="true"
         >
         </com.rey.material.widget.TabPageIndicator>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/horizontal_line"
+        android:id="@+id/hl_div"
+        android:layout_below="@+id/zy_book_actionbar"
+        />
     <android.support.v4.view.ViewPager
         android:id="@+id/zy_book_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/zy_book_actionbar"
+        android:layout_below="@+id/hl_div"
         >
 
     </android.support.v4.view.ViewPager>

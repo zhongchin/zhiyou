@@ -5,7 +5,7 @@
              android:background="#0099cc"
              android:id="@+id/zy_fl_book"
          >
-       <com.apolle.zhiyou.view.ReadBookView
+       <WebView
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:id="@+id/book_content"

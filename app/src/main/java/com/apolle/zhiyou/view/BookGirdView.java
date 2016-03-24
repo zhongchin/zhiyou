@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.support.v4.graphics.BitmapCompat;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.apolle.zhiyou.R;
@@ -27,17 +29,15 @@ public class BookGirdView extends GridView {
         int count=getChildCount();
         int top=count>0?getChildAt( 0 ).getTop():0;
         int backgroundWidth=background.getWidth();
-        int backgroundHeight=background.getHeight()+2;
         int width=getWidth();
         int height=getHeight();
-        Matrix matrix=new Matrix();
-     /*     float values=[
-                2.0,0.0,
-                ];*/
 
-        Bitmap newBitmap=Bitmap.createScaledBitmap(background,width,(height-50)/3,true);
-//            Bitmap newBitmap=Bitmap.createBitmap(background,0,0,backgroundWidth/3,height/3);
-        for (int y=top;y<height;y+=(height-50)/3){
+        ViewGroup.LayoutParams layoutParams=getChildAt(0).getLayoutParams();
+        View childView=getChildAt(0);
+        int dstHeight=layoutParams.height+childView.getPaddingTop()+childView.getPaddingBottom();
+        Bitmap newBitmap=Bitmap.createScaledBitmap(background,width,dstHeight,true);
+
+        for (int y=top;y<height;y+=dstHeight){
             for (int x=0;x<width;x+=backgroundWidth){
                 canvas.drawBitmap(newBitmap,x,y,null);
             }

@@ -15,17 +15,21 @@ import com.apolle.zhiyou.Model.Channel;
 import com.apolle.zhiyou.R;
 import com.apolle.zhiyou.activity.MainActivity;
 import com.apolle.zhiyou.adapter.TabPageAdapter;
+import com.apolle.zhiyou.interactor.NetUrl;
+import com.apolle.zhiyou.mUtil.MDbUtil;
+import com.hp.hpl.sparta.Text;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.rey.material.widget.Spinner;
 import com.rey.material.widget.TabPageIndicator;
+import com.rey.material.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     private static final String  TAG_ONE= "huangtao===";
 
@@ -67,33 +71,6 @@ public class HomeFragment extends BaseFragment {
         containerView= inflater.inflate(R.layout.fragment_home, container, false);
          indicator=(TabPageIndicator) containerView.findViewById(R.id.zy_home_title);
          pager= (ViewPager) containerView.findViewById(R.id.zy_home_container);
-          MainActivity.onBottomTabChangeListener onBottomTabChangeListener=new MainActivity.onBottomTabChangeListener(){
-              @Override
-              public void onBottomTabChange(Toolbar toolbar) {
-
-              }
-          };
-      /*  tabInteractor=new TabInteractor() {//当切换到此页面时更换toolbar中内容
-            @Override
-            public void OnTabChange(Context context, View toolbar_content) {
-                  spinner=new Spinner(context);
-                  spinnerItems=getResources().getStringArray(R.array.articleTypes);
-                ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,android.R.id.text1,spinnerItems);
-                 spinner.setAdapter(adapter);
-                ((LinearLayout)toolbar_content).addView(spinner);
-            }
-        };
-        if(null!=spinner){
-            spinner.setOnItemClickListener( new Spinner.OnItemClickListener() {
-                @Override
-                public boolean onItemClick(Spinner parent, View view, int position, long id) {
-                    if(null!=spinnerItems){
-
-                    }
-                    return false;
-                }
-            });
-        }*/
 
          db=DbUtils.create(getActivity(),"mchannel.db");
         //获取用户的home title;
@@ -107,23 +84,7 @@ public class HomeFragment extends BaseFragment {
             pager.setAdapter(adapter);
             indicator.setViewPager(pager);
         }
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                System.out.println(TAG_ONE+" onPageScrolled:"+position+" positionOffset:"+"positionOffsetPixels"+positionOffsetPixels);
-            }
-            @Override
-            public void onPageSelected(int position) {
-                    pager.setCurrentItem(position);
-                System.out.println(TAG_ONE+"onPageSelected"+position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                System.out.println(TAG_ONE+"onPageScrollStateChanged state"+state);
-            }
-        });
-
+        indicator.setOnPageChangeListener(this);
         return containerView;
     }
 
@@ -149,11 +110,13 @@ public class HomeFragment extends BaseFragment {
         }
         return mtitles;
     }
+
+    //加载tab标题
    private void initNetHomeTileData(){
 //         请求参数头
-       final HashMap<String,String> params=new HashMap<String,String>();
-       params.put("uid","2");//当前登录用户id
-       System.out.println("title:"+titles);
+       final HashMap<String,String> params= NetUrl.initParams();
+
+          params.put("uid","2");//当前登录用户id
          ArticleAction.HomeTitle(getActivity(), params, new ArticleAction.renderCallback() {
              @Override
              public void SuccessRender(ArrayList<? extends Serializable> titles) {
@@ -161,21 +124,40 @@ public class HomeFragment extends BaseFragment {
                  pager.setAdapter(adapter);
                  indicator.setViewPager(pager);
                  try{
-                     db.saveAll(titles);//将数据存储到本地
+                     MDbUtil.newInstance(getContext()).saveNoInsert(titles,"title");//将数据存储到本地
                  }catch (Exception e){
                      e.printStackTrace();
                  }
              }
 
              @Override
-             public void FailRender() {
+             public void FailRender(int code, String error) {
+                 if(code==4){
+                     toast(error);
+                 }else{
+                     toast(error);
+                 }
 
              }
          });
    }
 
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+    }
 
+    @Override
+    public void onPageSelected(int position) {
+        MainActivity activity= (MainActivity) getActivity();
+        TextView headTitle= (TextView) activity.findViewById(R.id.header_title);
+        String title= (String) pager.getAdapter().getPageTitle(position);
+        headTitle.setText(title);
+    }
 
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

@@ -2,13 +2,17 @@ package com.apolle.zhiyou.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.AbsListView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -16,21 +20,26 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.apolle.zhiyou.Http.ArticleAction;
 import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
 import com.apolle.zhiyou.Tool.LruImageCache;
-import com.apolle.zhiyou.adapter.HomeArticleGridViewAdapter;
 import com.apolle.zhiyou.interactor.NetUrl;
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.google.gson.Gson;
+import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.rey.material.widget.TextView;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,36 +49,45 @@ public class ArticleDetailActivity extends BaseActivity {
     private   Article article;
     private ImageLoader imageLoader;
 
+    @ViewInject(R.id.appbarlayout)
+    AppBarLayout appBarLayout;
     @ViewInject(R.id.toolbar)
         Toolbar toolbar;
-    @ViewInject(R.id.home_content_item_headpic)
-        NetworkImageView home_content_item_headpic;
-    @ViewInject(R.id.content_article_subject)
-        TextView  content_article_subject;
-    @ViewInject(R.id.home_content_item_username)
-        TextView home_content_item_username;
-    @ViewInject(R.id.home_content_item_view)
-        TextView home_content_item_view;
-    @ViewInject(R.id.home_content_attachment)
-        GridView home_content_attachment;
-    @ViewInject(R.id.toolbar_layout)
-    CollapsingToolbarLayout toolbar_layout;
-    @ViewInject(R.id.toolbarBg)
-    ImageView toolbarBg;
+    @ViewInject(R.id.article_title)
+    TextView article_title;
+    @ViewInject(R.id.userheadpic)
+    BootstrapCircleThumbnail userheadpic;
+    @ViewInject(R.id.author)
+    TextView author;
+    @ViewInject(R.id.publish_time)
+    TextView publish_time;
+
+    @ViewInject(R.id.article_content)
+    WebView article_content;
+    @ViewInject(R.id.comments)
+    ListViewCompat comments;
+    @ViewInject(R.id.send_comment)
+    AppCompatEditText send_comment;
+    @ViewInject(R.id.share)
+    AppCompatButton share;
+    @ViewInject(R.id.collect)
+    AppCompatButton collect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ViewUtils.inject(this);
          Bundle bundle=getIntent().getExtras();
         article= (Article) bundle.getSerializable("article");
-
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         mQueue=Volley.newRequestQueue(this);
         LruImageCache imageCache=LruImageCache.getInstance();
          imageLoader=new ImageLoader(mQueue,imageCache);
-        System.out.println("article:"+article+"headpic"+article.getHeadpic()+"imageloader"+imageLoader);
         initData();
 
     }
@@ -81,78 +99,37 @@ public class ArticleDetailActivity extends BaseActivity {
     }
 
     public void initData(){
-        toolbar_layout.setTitle(article.getSubject());
-        home_content_item_headpic.setErrorImageResId(R.drawable.ic_arrow_to_drawer);
-        home_content_item_headpic.setDefaultImageResId(R.drawable.ic_stop_to_play);
+        ImageLoader.ImageListener listener=imageLoader.getImageListener(userheadpic,R.drawable.user_headpic,R.drawable.user_error);
         String imgSrc=article.getHeadpic();
-        if(null!=imgSrc){
-            home_content_item_headpic.setImageUrl(imgSrc,imageLoader);
-        }
+         imageLoader.get(imgSrc,listener,60,60);
 
-        content_article_subject.setText(article.getSubject());
-        home_content_item_username.setText(article.getAuthor());
-        home_content_item_view.setText(article.getContent());
-        ArrayList<Article.AttachmentsEntity> attachments=(ArrayList<Article.AttachmentsEntity>) article.getAttachments();
+        article_title.setText(article.getSubject());
+        author.setText(article.getAuthor());
+        String dateline=article.getDateline();
 
-        if(attachments.size()>0){
-           BaseAdapter adapter =new HomeArticleGridViewAdapter(this,attachments);
-            home_content_attachment.setAdapter(adapter);
-        }
-        toolbarBg.setImageResource(R.drawable.barbg);
-        toolbarBg.setAlpha(0.5f);
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy年MM月dd HH:mm:ss");
+        String time=dateFormat.format(new Date(Integer.parseInt(dateline)*1000));
+        publish_time.setText(time);
+        article_content.getSettings().setJavaScriptEnabled(true);
+        article_content.getSettings().setDefaultTextEncodingName("UTF-8");
+        article_content.loadData(article.getContent(),"text/html; charset=UTF-8",null);
     }
-    public void Actions(){
 
-    }
     public void getNetData(int num,int offset,int lastRefreshTime,String type){
-        params=new HashMap<String,String>();
-        params.put("cid",article.getTid());
+        params=NetUrl.initParams();
+        params.put("tid",article.getTid());
         params.put("num",String.valueOf(num));
         params.put("offset",String.valueOf(offset));
-        params.put("timeline", String.valueOf(lastRefreshTime));
-        params.put("type",type);
-        System.out.println("数据url"+ NetUrl.HOME_CONTENT);
-        final RequestQueue  requestQueue= Volley.newRequestQueue(getApplicationContext());
-        StringRequest request= new StringRequest(
-                Request.Method.POST, NetUrl.HOME_CONTENT, new Response.Listener<String>() {
+        ArticleAction.getArticleComments(ArticleDetailActivity.this, params, new ArticleAction.renderCallback() {
             @Override
-            public void onResponse(String response) {
-                if(null!=response){
-                    try {
-                        JSONObject js=new JSONObject(response);
-                        String code=js.getString("errorcode");
-                        System.out.println("hello"+code);
-                        if(code.equals("0")){
-                            System.out.println("hello ok");
-                            String content=js.getString("content");
-                            Gson gson=new Gson();
-                        }else{
+            public void SuccessRender(ArrayList<? extends Serializable> content) {
 
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-                }
-                System.out.println("获取的数据"+response);
             }
-        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("错误"+error.getMessage());
+            public void FailRender(int code, String error) {
+
             }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                System.out.println("参数"+params);
-                return params;
-            }
-        };
-
-        requestQueue.add(request);
-
+        });
     }
 
     @Override
@@ -166,9 +143,27 @@ public class ArticleDetailActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @OnClick({R.id.collect,R.id.share})
+    public void ViewOnClick(View view){
+        switch (view.getId()){
+            case R.id.collect:
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("article", article);
+                bundle.putInt("operator",1);
+                goActivity(SelectNodeActivity.class,bundle);
+                break;
+            case R.id.share:
+                    doShare();
+                break;
+        }
+
+    }
 
     @Override
     public AppCompatActivity getActivity() {
         return ArticleDetailActivity.this;
+    }
+    private void doShare(){
+
     }
 }

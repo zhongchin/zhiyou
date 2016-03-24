@@ -1,58 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:id="@+id/article_coordinator_content"
-    >
-
+    android:id="@+id/article_coordinator_content">
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:navigationIcon="?attr/homeAsUpIndicator"
-                />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-        <ImageView
+        android:layout_height="wrap_content"
+        android:id="@+id/appbarlayout"
+        >
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="300dp"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-            app:layout_collapseMode="parallax"
-            android:scaleType="centerCrop"
-            android:id="@+id/toolbarBg"
-            />
+            android:id="@+id/toolbar"
+            style="@style/Base.Theme.AppCompat.Light"
+            android:title=""
+            >
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-   <android.support.design.widget.FloatingActionButton
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_gravity="bottom|right"
-       android:src="@mipmap/ic_launcher"
-       app:layout_anchor="@id/toolbar"
-       app:layout_anchorGravity="bottom|right|end"
-       />
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/appbarlayout"
+      >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:id="@+id/article_hear"
+           >
+             <com.rey.material.widget.TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textSize="20sp"
+                 android:layout_marginLeft="20dp"
+                 android:layout_marginRight="20dp"
+                 android:layout_marginTop="10dp"
+                 android:text="测试分享的文章标题，字数随机"
 
+                 android:id="@+id/article_title" />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="10dp"
+               android:layout_marginLeft="20dp"
+               >
+               <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="2"
+                   android:src="@drawable/robin"
+                    android:maxHeight="60dp"
+                   android:maxWidth="60dp"
 
-    <include layout="@layout/content_article_detail" />
+                   app:bootstrapSize="xl"
+                   app:hasBorder="true"
+                   android:id="@+id/userheadpic" />
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:layout_marginLeft="20dp"
+                   android:layout_gravity="center_vertical"
+                   android:layout_weight="5"
+                   >
+                    <com.rey.material.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="只是测试作者"
+                        android:textSize="16sp"
 
-</android.support.design.widget.CoordinatorLayout>
+                        android:id="@+id/author" />
+                     <com.rey.material.widget.TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                         android:textSize="14sp"
+                       android:layout_marginTop="20dp"
+                       android:text="2016-23-23 23:34:23"
+                         android:id="@+id/publish_time" />
+               </LinearLayout>
+           </LinearLayout>
+         </LinearLayout>
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/article_content"
+                >
+            </WebView>
+
+              <android.support.v7.widget.ListViewCompat
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
+                  android:id="@+id/comments"
+                  android:headerDividersEnabled="true"
+                  >
+              </android.support.v7.widget.ListViewCompat>
+      </LinearLayout>
+  </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="#FFF6F6F6"
+        android:minHeight="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="#FFFFFFFF"
+            android:layout_gravity="center"
+            >
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="写评论……"
+                android:paddingLeft="10dp"
+                android:textColorHint="#99000000"
+                android:textSize="12sp"
+                android:background="@null"
+                android:id="@+id/send_comment" />
+        </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:background="@drawable/collect_small"
+                android:id="@+id/collect" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/share_small"
+                android:id="@+id/share" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

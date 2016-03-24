@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BookScan {
 
     private static BookScan bookScan;
-    private String[] suffixs=new String[]{".txt", ".html", ".epub", ".oeb", ".fb2", ".mobi", ".rtf" ,".umd"};
+    private String[] suffixs=new String[]{"txt", "html", "epub", "oeb", "fb2", "mobi", "rtf" ,"umd"};
     private String endWith="";
     ArrayList<LocalBook> books;
     public  ArrayList<LocalBook> getAllBook(String path){
@@ -62,7 +62,7 @@ public class BookScan {
         }else if(isBook(filename)){
             LocalBook book=new LocalBook();
             book.setPath(file.getAbsolutePath());
-            book.setName(file.getName());
+            book.setName(FileTool.getFileName(filename));
             book.setIconType(false);
             if(null!=listener){
                 listener.onScan(book);

@@ -30,6 +30,7 @@ import com.apolle.zhiyou.Model.LocalBook;
 import com.apolle.zhiyou.R;
 import com.apolle.zhiyou.Tool.BookScan;
 import com.apolle.zhiyou.Tool.DisplayMerticsTool;
+import com.apolle.zhiyou.Tool.FileTool;
 import com.apolle.zhiyou.activity.BaseActivity;
 import com.apolle.zhiyou.activity.MainActivity;
 
@@ -376,15 +377,18 @@ public class ScanBookActivity extends BaseActivity {
      * 跳到书架
      */
     private void gotoBookShelf(){
-        Intent intent=  new Intent(ScanBookActivity.this, MainActivity.class );
-          startActivity(intent);
+           Bundle bundle=new Bundle();
+           bundle.putInt("tab",2);
+           bundle.putInt("fg",1);
+          goActivity(MainActivity.class);
     }
     private void goToReadBookActivity(String path){
          Intent intent=new Intent( ScanBookActivity.this,ReadBookActivity.class );
         intent.addCategory( "android.intent.action.view" );
-        intent.setDataAndType(Uri.fromFile(new File( path ) ),"epub");
+        String type=FileTool.getFileType(path);
+        intent.setDataAndType(Uri.fromFile(new File( path ) ),type);
         startActivity(intent);
-
+        finish();
     }
 
 }
