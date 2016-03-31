@@ -63,7 +63,7 @@ public class AnnotSettingMenu {
 	 *  </br>White   &nbsp;    5
 	 */
 	public enum ColorType {
-		BLACK(0), RED(1), YELLOW(2), GREEN(3), BLUE(4), WHITE(5);
+		BLACK(0), RED(1), YELLOW(2), GREEN(3), BLUE(4), WHITE(5), ;
 
 		private int mValue;
 

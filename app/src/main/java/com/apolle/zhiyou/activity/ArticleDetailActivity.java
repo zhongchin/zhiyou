@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.apolle.zhiyou.Http.ArticleAction;
 import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
+import com.apolle.zhiyou.Tool.DateTimeTool;
 import com.apolle.zhiyou.Tool.LruImageCache;
 import com.apolle.zhiyou.interactor.NetUrl;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
@@ -107,8 +108,8 @@ public class ArticleDetailActivity extends BaseActivity {
         author.setText(article.getAuthor());
         String dateline=article.getDateline();
 
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy年MM月dd HH:mm:ss");
-        String time=dateFormat.format(new Date(Integer.parseInt(dateline)*1000));
+        String  time=DateTimeTool.LongAge(Integer.parseInt(article.getDateline()));
+
         publish_time.setText(time);
         article_content.getSettings().setJavaScriptEnabled(true);
         article_content.getSettings().setDefaultTextEncodingName("UTF-8");

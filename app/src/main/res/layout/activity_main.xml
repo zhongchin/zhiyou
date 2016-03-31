@@ -26,7 +26,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="#2E9FFF"
                 android:layout_gravity="center"
                 android:gravity="center"
                 app:layout_scrollFlags="enterAlwaysCollapsed"

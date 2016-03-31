@@ -18,10 +18,12 @@ import com.apolle.zhiyou.Http.ArticleAction;
 import com.apolle.zhiyou.Http.NoteAction;
 import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
+import com.apolle.zhiyou.Tool.DateTimeTool;
 import com.apolle.zhiyou.Tool.LruImageCache;
 import com.apolle.zhiyou.activity.ArticleDetailActivity;
 import com.apolle.zhiyou.activity.SelectNodeActivity;
 import com.apolle.zhiyou.interactor.NetUrl;
+import com.apolle.zhiyou.view.CircleImageView;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.LinearLayout;
@@ -74,7 +76,7 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
          if(null==convertView){
              LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
              convertView=inflater.inflate(R.layout.home_content_item,null);
-             myViewHolder.avatar=(BootstrapCircleThumbnail) convertView.findViewById(R.id.home_content_item_headpic);
+             myViewHolder.avatar=(CircleImageView) convertView.findViewById(R.id.home_content_item_headpic);
              myViewHolder.userTextView=(TextView)convertView.findViewById(R.id.home_content_item_username);
              myViewHolder.otherTopicTextView=(TextView)convertView.findViewById(R.id.home_content_item_other);
              myViewHolder.contentTextView=(TextView) convertView.findViewById(R.id.home_content_item_view);
@@ -101,9 +103,8 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
 
 
           myViewHolder.userTextView.setText(article.getAuthor());
-          String dateline=article.getDateline();
-          SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy年MM月dd HH:mm:ss");
-          String time=dateFormat.format(new Date(Integer.parseInt(dateline)*1000));
+
+          String  time=DateTimeTool.LongAge(Integer.parseInt(article.getDateline()));
           myViewHolder.otherTopicTextView.setText(time);
           myViewHolder.ArticleContentView.setText(article.getContent());
           myViewHolder.subjectTextView.setText(article.getSubject());
@@ -154,7 +155,7 @@ public class HomeArticleContentAdapter extends BaseAdapter implements View.OnCli
 
 
     public class HomeViewHolder{
-        public BootstrapCircleThumbnail avatar;
+        public CircleImageView avatar;
         public TextView  userTextView,otherTopicTextView,subjectTextView,ArticleContentView;
         TextView contentTextView;
         Button FavouriteBtn,ForwardBtn,CollectBtn,saveBtn;

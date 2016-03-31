@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
-
-import com.lidroid.xutils.ViewUtils;
-
-import java.security.KeyStore;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -55,6 +53,24 @@ public abstract class BaseActivity extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
+    }
+    public void test(){
+        SimpleDateFormat dateFormat=  new SimpleDateFormat("yyyy:mm:dd H:i:s");
+        //计算距今多长时间
+        long curTime=System.currentTimeMillis()/1000;
+        long time=curTime-(1458116190);
+        int day= (int)(time/(24*3600));
+        int month=0;
+        if(day>30){
+            month=1;
+            day=day-30;
+        }
+        long sTime=time%(24*3600);
+        int hour=(int)(sTime/3600);
+          sTime=sTime%3600;
+        int second=(int)(sTime/60);
+        int minutes=(int)(sTime%60);
+
     }
 
 }

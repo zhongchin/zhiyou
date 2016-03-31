@@ -14,7 +14,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.apolle.zhiyou.Model.Article;
 import com.apolle.zhiyou.R;
+import com.apolle.zhiyou.Tool.DateTimeTool;
 import com.apolle.zhiyou.Tool.LruImageCache;
+import com.apolle.zhiyou.view.CircleImageView;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.rey.material.widget.ImageButton;
 import com.rey.material.widget.TextView;
@@ -57,7 +59,7 @@ public class ThrendListAdapter extends BaseAdapter implements View.OnClickListen
         if(convertView==null){
             myViewholder=new TrendViewHolder();
               convertView= LayoutInflater.from(mContext).inflate(R.layout.chat_trend_item,null);
-              myViewholder.user_headpic= (BootstrapCircleThumbnail) convertView.findViewById(R.id.userheadpic);
+              myViewholder.user_headpic= (CircleImageView) convertView.findViewById(R.id.userheadpic);
               myViewholder.username= (TextView) convertView.findViewById(R.id.username);
               myViewholder.subject= (TextView) convertView.findViewById(R.id.note_title);
               myViewholder.content= (TextView) convertView.findViewById(R.id.note_content);
@@ -82,7 +84,9 @@ public class ThrendListAdapter extends BaseAdapter implements View.OnClickListen
           myViewholder.username.setText(article.getNickname());
           myViewholder.subject.setText(article.getSubject());
           myViewholder.content.setText(Html.fromHtml(article.getContent()));
-          myViewholder.dateline.setText(article.getDateline());
+          String  time= DateTimeTool.LongAge(Integer.parseInt(article.getDateline()));
+          myViewholder.dateline.setText(time);
+
            Bundle bundle=new Bundle();
            bundle.putSerializable(VIEW_TAG,article);
            bundle.putInt(VIEW_POSITION,position);
@@ -106,7 +110,7 @@ public class ThrendListAdapter extends BaseAdapter implements View.OnClickListen
     }
 
     public class TrendViewHolder{
-        public BootstrapCircleThumbnail user_headpic;
+        public CircleImageView user_headpic;
         public TextView username,content,subject,dateline,commentBtn,likeBtn;
         public ImageButton showComment;
         public LinearLayout commentContainer;

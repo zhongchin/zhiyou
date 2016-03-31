@@ -167,9 +167,9 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
     @OnClick({R.id.zy_ll_square,R.id.zy_ll_book,R.id.zy_ll_news,R.id.zy_ll_note})
     public void ViewOnClick(View view){
         ft= fg.beginTransaction();
-          Bundle arguments=new Bundle();
-        switch (view.getId()){
+        Bundle arguments=new Bundle();
 
+        switch (view.getId()){
                 case R.id.zy_ll_book:
                     if(1!=choiceIndex){
                             bookFragment=BookFragment.getBookFragment();

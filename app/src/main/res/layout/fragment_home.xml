@@ -18,6 +18,7 @@
         android:fillViewport="true"
         android:minHeight="@dimen/titleBarMinHeight"
         app:tpi_mode="fixed"
+        android:background="#F0F0F0"
         app:tpi_centerCurrentTab="true"
         android:scrollIndicators="bottom">
 

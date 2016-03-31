@@ -49,11 +49,5 @@ public abstract class BaseFragment extends Fragment {
     public void toast(String topic){
         Toast.makeText(getActivity(),topic,Toast.LENGTH_SHORT).show();
     }
-      /*public static Context getContext(){
-            if(null==context){
-                context=getActivity();
-            }
-          return context;
-      }*/
 
 }

@@ -334,7 +334,13 @@ public class ScanBookActivity extends BaseActivity {
                 @Override
                 protected void onProgressUpdate(LocalBook... book) {
                     if (null != scanState) {
-                        scanState.setText( "正在扫描" + book[0].getPath() );
+
+                        try {
+                            Thread.sleep(1000);
+                            scanState.setText( "正在扫描" + book[0].getPath() );
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 

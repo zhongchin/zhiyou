@@ -1,5 +1,8 @@
 package com.apolle.zhiyou.activity;
 import android.app.ProgressDialog;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
@@ -22,6 +25,8 @@ import com.lidroid.xutils.view.annotation.event.OnFocusChange;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 public class LoginActivity extends BaseActivity {
@@ -47,6 +52,8 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         ViewUtils.inject(this);
+      /*  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
         initView();
 
     }
@@ -55,12 +62,12 @@ public class LoginActivity extends BaseActivity {
 //        forget.setText(Html.fromHtml("忘记密码了? <a href=''>找回密码</a>"));
         register.setText(Html.fromHtml("还没有智友账户? <a href=''>注册</a>"));
     }
-//    @Override
+    @Override
     public AppCompatActivity getActivity() {
         return LoginActivity.this;
     }
 
-//    @Override
+    @Override
     public int getLayoutId() {
         return R.layout.activity_login;
     }

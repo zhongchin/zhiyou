@@ -124,15 +124,7 @@ public class ConcactExpandListAdapter  extends BaseExpandableListAdapter{
     }
     public int getPersonIndex(String key){
         if(groupPersons.size()>0){
-           /* Set set=groupPersons.entrySet();
-            Object[] objects=set.toArray();*/
             return  letters.indexOf(key);
-
-           /* for (int i=0;i<letters.size();i++){
-                if(objects[i].toString().equals(key)){
-                    return i;
-                }
-            }*/
         }
         return 0;
     }
@@ -159,13 +151,16 @@ public class ConcactExpandListAdapter  extends BaseExpandableListAdapter{
             if(convertView==null){
                 convertView=LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_1,null);
                 AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 30);
+
                 convertView.setLayoutParams(layoutParams);
                 convertView.setBackgroundColor(Color.parseColor("#E6E6E6"));
             }
             TextView textView= (TextView) convertView.findViewById(android.R.id.text1);
+            textView.setTextSize(14);
             textView.setText(letters.get(groupPosition));
             ((ExpandableListView)parent).expandGroup(groupPosition);
             return convertView;
+
         }
         return null;
     }
@@ -201,14 +196,11 @@ public class ConcactExpandListAdapter  extends BaseExpandableListAdapter{
 
     @Override
     public void onGroupExpanded(int groupPosition) {
-        System.out.println("展开展开展开");
         super.onGroupExpanded(groupPosition);
     }
 
     @Override
     public void onGroupCollapsed(int groupPosition) {
-        System.out.println("收缩收缩收缩收缩");
-        //super.onGroupCollapsed(groupPosition);
     }
 
 

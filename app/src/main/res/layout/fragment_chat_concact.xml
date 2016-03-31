@@ -12,12 +12,10 @@
         android:childDivider="@drawable/horizontal_line"
         android:footerDividersEnabled="false"
         tools:listheader="@layout/chat_concact_header"
-        tools:listfooter="@layout/simple_item_text"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:scrollbars="none"
         >
     </ExpandableListView>
+
     <com.apolle.zhiyou.view.SlideListView
         android:layout_width="30dp"
         android:layout_height="match_parent"

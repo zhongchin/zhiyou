@@ -4,7 +4,7 @@
     <string name="logout">退出</string>
     <string name="app_name">智友</string>
     <string name="square">广场</string>
-    <string name="bookstore">藏书阁</string>
+    <string name="bookstore">书架</string>
     <string name="note">笔记</string>
     <string name="news">会话</string>
     <string name="bookOnline">在线书城</string>
@@ -40,7 +40,6 @@
     <string name="more">更多</string>
     <string name="login_user">用户名/手机号/邮箱</string>
     <string name="login_pwd">6至16位密码</string>
-
 
 
     <string name="information">消息</string>

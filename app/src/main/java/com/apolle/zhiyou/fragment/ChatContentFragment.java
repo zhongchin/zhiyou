@@ -171,15 +171,6 @@ public class ChatContentFragment extends BaseFragment {
     }
 
     private void slidebarListView(){
-       /* PopupWindow popupWindow=new PopupWindow(getActivity());
-        popupWindow.setHeight(80);
-        popupWindow.setWidth(80);
-        dialog=new TextView(getActivity());
-        dialog.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-        dialog.setAlpha(1);
-        popupWindow.setContentView(dialog);
-        popupWindow.showAtLocation(getView(), Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL,0,0);*/
-
         slideBar.setTextView(mDialog);
         slideBar.setOnTouchChangedListener(new SlideListView.OnTouchChangedListener() {
             @Override
@@ -225,7 +216,6 @@ public class ChatContentFragment extends BaseFragment {
          HashMap<String,String> params=NetUrl.initParams();
          params.put("num","10");
          params.put("offset",String.valueOf(offset));
-         test("trendoffset"+offset);
          ChatTrendAction.getTrendList(getActivity(), params, new ChatTrendAction.TrendResponseCallback() {
              @Override
              public void onSuccess(ArrayList<? extends Serializable> message) {

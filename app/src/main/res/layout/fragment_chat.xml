@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleBarMinHeight"
         app:tpi_indicatorHeight="2dp"
+        style="@style/Material.Widget.TabPageIndicator"
         app:theme="@style/Material.Widget.TabPageIndicator.Fixed.Light"
         app:tpi_tabSingleLine="true"
         app:tpi_indicatorAtTop="false"

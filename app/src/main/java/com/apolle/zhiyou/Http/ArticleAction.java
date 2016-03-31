@@ -72,6 +72,7 @@ public class ArticleAction {
             @Override
             public void onFailed(VolleyError error) {
                 if(renderCallback!=null){
+                    System.out.println("huangtao"+error);
                     renderCallback.FailRender(8,error.getMessage());
                 }
             }
